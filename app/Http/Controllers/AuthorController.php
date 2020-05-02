@@ -35,7 +35,7 @@ class AuthorController extends Controller {
 		$author->name = $request->input('name');
 		$author->save();
 		return redirect()->route('admin.index')->with('status', [
-            'message' => 'Запись успешно добавлена',
+            'message' => 'Автор успешно добавлен',
             'class' => 'alert-success'
         ]);
     }

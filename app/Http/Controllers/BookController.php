@@ -22,9 +22,8 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('admin.book.create');
     }
 
     /**
@@ -33,9 +32,14 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $book = new Book;
+		$book->name = $request->input('name');
+		$book->save();
+		return redirect()->route('admin.index')->with('status', [
+            'message' => 'Книга успешно добавлена',
+            'class' => 'alert-success'
+        ]);
     }
 
     /**

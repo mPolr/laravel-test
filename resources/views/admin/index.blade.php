@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header">Авторы</div>
                     <div class="card-body">
-                        <p><a href="{{ route('admin.add_author') }}">Добавить автора</a></p>
+                        <p><a href="{{ route('authors.create') }}">Добавить автора</a></p>
                         <hr>
                         @if (!count($authors))
                             <p>Список авторов пуст</p>
@@ -50,12 +50,39 @@
                 <div class="card">
                     <div class="card-header">Книги</div>
                     <div class="card-body">
-                        <p><a href="{{ route('admin.add_book') }}">Добавить книгу</a></p>
+                        <p><a href="{{ route('books.create') }}">Добавить книгу</a></p>
                         <hr>
                         @if (!count($books))
                             <p>Список книг пуст</p>
                         @else
-                            <p></p>
+                            <p>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Книга</th>
+                                            <th scope="col">Авторы</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                          @foreach ($books as $book)
+                                            <tr>
+                                                    <th scope="row">{{ $book->name }}</th>
+                                                    <td>
+                                                        @if($book->authors->count())
+                                                            <ul>
+                                                            @foreach ($authors as $author)
+                                                                <li>{{ $author->name }}</li>
+                                                            @endforeach
+                                                            </ul>
+                                                        @else
+                                                            авторы не указаны
+                                                        @endif
+                                                    </td>
+                                            </tr>
+                                          @endforeach
+                                      </tbody>
+                                </table>
+                            </p>
                         @endif
                     </div>
                 </div>
