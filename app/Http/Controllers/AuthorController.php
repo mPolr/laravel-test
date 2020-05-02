@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Author;
 use Illuminate\Http\Request;
 
-class AuthorController extends Controller
-{
+class AuthorController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -22,9 +20,8 @@ class AuthorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('admin.author.create');
     }
 
     /**
@@ -33,9 +30,14 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+		$author = new Author;
+		$author->name = $request->input('name');
+		$author->save();
+		return redirect()->route('admin.index')->with('status', [
+            'message' => 'Запись успешно добавлена',
+            'class' => 'alert-success'
+        ]);
     }
 
     /**
@@ -44,8 +46,7 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function show(Author $author)
-    {
+    public function show(Author $author) {
         //
     }
 
@@ -55,8 +56,7 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function edit(Author $author)
-    {
+    public function edit(Author $author) {
         //
     }
 
@@ -67,8 +67,7 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Author $author)
-    {
+    public function update(Request $request, Author $author) {
         //
     }
 
@@ -78,8 +77,7 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Author $author)
-    {
+    public function destroy(Author $author) {
         //
     }
 }

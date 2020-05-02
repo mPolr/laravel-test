@@ -2,9 +2,12 @@
 
 namespace App;
 
-use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model {
+
+    public function authors() {
+        return $this->belongsToMany('App\Author');
+    }
 
 }
