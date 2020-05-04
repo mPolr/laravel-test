@@ -59,9 +59,8 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function edit(Book $book)
-    {
-        //
+    public function edit(Book $book) {
+        return view('admin.book.edit', ['book' => $book]);
     }
 
     /**
@@ -71,9 +70,13 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
-    {
-        //
+    public function update(Request $request, Book $book) {
+        $book->name = $request->input('name');
+		$book->save();
+		return redirect()->route('admin.index')->with('status', [
+            'message' => 'Данные книги успешно обновлены',
+            'class' => 'alert-success'
+        ]);
     }
 
     /**
