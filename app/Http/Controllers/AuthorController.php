@@ -57,7 +57,7 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Author $author) {
-        //
+        return view('admin.author.edit', ['author' => $author]);
     }
 
     /**
@@ -68,7 +68,12 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Author $author) {
-        //
+        $author->name = $request->input('name');
+		$author->save();
+		return redirect()->route('admin.index')->with('status', [
+            'message' => 'Данные автора успешно обновлены',
+            'class' => 'alert-success'
+        ]);
     }
 
     /**

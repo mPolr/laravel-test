@@ -30,13 +30,20 @@
                                         <tr>
                                             <th scope="col">Имя</th>
                                             <th scope="col">Количество книг</th>
+                                            <th scope="col">Действия</th>
                                         </tr>
                                       </thead>
                                       <tbody>
                                           @foreach ($authors as $author)
                                             <tr>
-                                                    <th scope="row">{{ $author->name }}</th>
-                                                    <td>{{ $author->books->count() }}</td>
+                                                <th scope="row">{{ $author->name }}</th>
+                                                <td>{{ $author->books->count() }}</td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="{{ route('authors.edit', $author) }}" class="btn btn-primary">Ред.</a>
+                                                        <a href="{{ route('authors.destroy', $author) }}" class="btn btn-danger">Удалить</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                           @endforeach
                                       </tbody>
@@ -61,23 +68,30 @@
                                         <tr>
                                             <th scope="col">Книга</th>
                                             <th scope="col">Авторы</th>
+                                            <th scope="col">Действия</th>
                                         </tr>
                                       </thead>
                                       <tbody>
                                           @foreach ($books as $book)
                                             <tr>
-                                                    <th scope="row">{{ $book->name }}</th>
-                                                    <td>
-                                                        @if($book->authors->count())
-                                                            <ul>
-                                                            @foreach ($authors as $author)
-                                                                <li>{{ $author->name }}</li>
-                                                            @endforeach
-                                                            </ul>
-                                                        @else
-                                                            авторы не указаны
-                                                        @endif
-                                                    </td>
+                                                <th scope="row">{{ $book->name }}</th>
+                                                <td>
+                                                    @if($book->authors->count())
+                                                        <ul>
+                                                        @foreach ($authors as $author)
+                                                            <li>{{ $author->name }}</li>
+                                                        @endforeach
+                                                        </ul>
+                                                    @else
+                                                        авторы не указаны
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="{{ route('books.edit', $book) }}" class="btn btn-primary">Ред.</a>
+                                                        <a href="{{ route('books.destroy', $book) }}" class="btn btn-danger">Удалить</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                           @endforeach
                                       </tbody>
