@@ -10,7 +10,7 @@ use App\Http\Resources\BookResource;
 class BookController extends Controller {
 
     public function __construct() {
-        $this->middleware('auth:api')->except(['list', 'show']);
+        //$this->middleware('auth:api')->except(['index', 'show']);
     }
 
     /**
@@ -28,8 +28,9 @@ class BookController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $id) {
-        return new BookResource($id);
+    public function show($id) {
+        $book = Book::findOrFail($id);
+        return new BookResource($book);
     }
 
     /**
@@ -40,7 +41,12 @@ class BookController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $book = Book::findOrFail($id);
+        if ($request->authors) {
+            $book->authors()->sync($request->authors);
+        }
+        $book->update($request->only(['name']));
+        return new BookResource($book);
     }
 
     /**
@@ -50,6 +56,8 @@ class BookController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        $book = Book::findOrFail($id);
+        $book->authors()->detach();
+        $book->delete();
     }
 }

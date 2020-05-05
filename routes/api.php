@@ -18,9 +18,7 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::get('books/list', 'Api\BookController@index');
     Route::get('books/by-id/{id}', 'Api\BookController@show');
-
-    Route::apiResource('books', 'Api\BookController', [
-        'only' => ['list', 'by-id', 'update', 'destroy']
-    ]);
+    Route::post('books/update/{id}', 'Api\BookController@update');
+    Route::delete('books/{id}', 'Api\BookController@destroy');
 
 });
