@@ -17,7 +17,7 @@ use Http\Controllers\Api\BookController;
 Route::group(['prefix' => 'v1'], function() {
 
     Route::get('books/list', 'Api\BookController@index');
-    Route::get('books/by-id', 'Api\BookController@show');
+    Route::get('books/by-id/{id}', 'Api\BookController@show');
 
     Route::apiResource('books', 'Api\BookController', [
         'only' => ['list', 'by-id', 'update', 'destroy']
