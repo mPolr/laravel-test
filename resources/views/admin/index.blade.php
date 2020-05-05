@@ -40,8 +40,12 @@
                                                 <td>{{ $author->books->count() }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a href="{{ route('authors.edit', $author) }}" class="btn btn-primary">Ред.</a>
-                                                        <a href="{{ route('authors.destroy', $author) }}" class="btn btn-danger">Удалить</a>
+                                                        <button href="{{ route('authors.edit', $author) }}" class="btn btn-primary">Ред.</button>
+                                                        <form action="{{ route('authors.destroy', $author) }}" method="POST">
+                                                            {{ csrf_field() }}
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Удалить</button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -88,8 +92,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a href="{{ route('books.edit', $book) }}" class="btn btn-primary">Ред.</a>
-                                                        <a href="{{ route('books.destroy', $book) }}" class="btn btn-danger">Удалить</a>
+                                                        <button href="{{ route('books.edit', $book) }}" class="btn btn-primary">Ред.</button>
+                                                        <form action="{{ route('books.destroy', $book) }}" method="POST">
+                                                            {{ csrf_field() }}
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Удалить</button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

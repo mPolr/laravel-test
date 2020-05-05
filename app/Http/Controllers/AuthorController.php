@@ -83,6 +83,10 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Author $author) {
-        //
+        $author->delete();
+        return redirect()->route('admin.index')->with('status', [
+            'message' => "Автор &laquo;{$author->name}&raquo; удален",
+            'class' => 'alert-danger'
+        ]);
     }
 }

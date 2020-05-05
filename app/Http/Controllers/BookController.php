@@ -85,8 +85,11 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
-    {
-        //
+    public function destroy(Book $book) {
+        $book->delete();
+        return redirect()->route('admin.index')->with('status', [
+            'message' => "Книга &laquo;{$book->name}&raquo; удалена",
+            'class' => 'alert-danger'
+        ]);
     }
 }
