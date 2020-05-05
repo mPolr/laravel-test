@@ -20,7 +20,6 @@
                     <div class="card-header">Авторы</div>
                     <div class="card-body">
                         <p><a href="{{ route('authors.create') }}">Добавить автора</a></p>
-                        <hr>
                         @if (!count($authors))
                             <p>Список авторов пуст</p>
                         @else
@@ -36,7 +35,9 @@
                                       <tbody>
                                           @foreach ($authors as $author)
                                             <tr>
-                                                <th scope="row">{{ $author->name }}</th>
+                                                <th scope="row">
+                                                    <a href="{{ route('authors.show', $author) }}">{{ $author->name }}</a>
+                                                </th>
                                                 <td>{{ $author->books->count() }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
@@ -62,7 +63,6 @@
                     <div class="card-header">Книги</div>
                     <div class="card-body">
                         <p><a href="{{ route('books.create') }}">Добавить книгу</a></p>
-                        <hr>
                         @if (!count($books))
                             <p>Список книг пуст</p>
                         @else
@@ -78,7 +78,9 @@
                                       <tbody>
                                           @foreach ($books as $book)
                                             <tr>
-                                                <th scope="row">{{ $book->name }}</th>
+                                                <th scope="row">
+                                                    <a href="{{ route('books.show', $book) }}">{{ $book->name }}</a>
+                                                </th>
                                                 <td>
                                                     @if($book->authors->count())
                                                         <ul>

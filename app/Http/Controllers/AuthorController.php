@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Author;
+use App\Book;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller {
@@ -21,7 +22,7 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('admin.author.create');
+        return view('admin.author.create', ['books' => Book::all()]);
     }
 
     /**
@@ -32,8 +33,11 @@ class AuthorController extends Controller {
      */
     public function store(Request $request) {
 		$author = new Author;
-		$author->name = $request->input('name');
-		$author->save();
+        $author->name = $request->input('name');
+        $author->save();
+        if (count($request->books)) {
+            $author->books()->attach($request->books);
+        }
 		return redirect()->route('admin.index')->with('status', [
             'message' => 'Автор успешно добавлен',
             'class' => 'alert-success'
@@ -47,7 +51,9 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Author $author) {
-        //
+        return view('admin.author.show', [
+            'author' => $author
+        ]);
     }
 
     /**
@@ -57,7 +63,10 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Author $author) {
-        return view('admin.author.edit', ['author' => $author]);
+        return view('admin.author.edit', [
+            'author' => $author,
+            'books' => Book::all()
+        ]);
     }
 
     /**
@@ -69,6 +78,7 @@ class AuthorController extends Controller {
      */
     public function update(Request $request, Author $author) {
         $author->name = $request->input('name');
+        $author->books()->sync($request->books);
 		$author->save();
 		return redirect()->route('admin.index')->with('status', [
             'message' => 'Данные автора успешно обновлены',
@@ -83,6 +93,7 @@ class AuthorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Author $author) {
+        $author->books()->detach();
         $author->delete();
         return redirect()->route('admin.index')->with('status', [
             'message' => "Автор &laquo;{$author->name}&raquo; удален",

@@ -12,10 +12,22 @@
                         <form method="POST" action="{{ route('authors.store') }}">
                             {{ csrf_field() }}
                             <div class="form-group">
-                            <label for="name">Имя</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Имя автора">
+                                <label for="name">Имя</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Имя автора">
                             </div>
-                            <button type="submit" class="btn btn-primary">Добавить</button>
+                            <div class="form-group">
+                                <p><strong>Книги автора:</strong></p>
+                                @if($books->count())
+                                    <select name="books[]" class="custom-select" multiple>
+                                        @foreach ($books as $book)
+                                            <option value="{{ $book->id }}">{{ $book->name }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    Нет книг которые можно добавить автору
+                                @endif
+                            </div>
+                            <p><button type="submit" class="btn btn-primary">Добавить</button></p>
                         </form>
                     </div>
                 </div>

@@ -13,8 +13,20 @@
                             {{ csrf_field() }}
                             @method('PUT')
                             <div class="form-group">
-                            <label for="name">Имя</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Имя автора" value="{{ $author->name }}">
+                                <label for="name">Имя</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Имя автора" value="{{ $author->name }}">
+                            </div>
+                            <div class="form-group">
+                                <p><strong>Книги автора:</strong></p>
+                                @if($books->count())
+                                    <select name="books[]" class="custom-select" multiple>
+                                        @foreach ($books as $book)
+                                            <option @if($author->books->contains($book)) selected @endif value="{{ $book->id }}">{{ $book->name }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    Нет книг которые можно добавить автору
+                                @endif
                             </div>
                             <button type="submit" class="btn btn-primary">Обновить</button>
                         </form>

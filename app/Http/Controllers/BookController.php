@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Author;
 use App\Book;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,7 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('admin.book.create');
+        return view('admin.book.create', ['authors' => Author::all()]);
     }
 
     /**
@@ -35,7 +36,10 @@ class BookController extends Controller
     public function store(Request $request) {
         $book = new Book;
 		$book->name = $request->input('name');
-		$book->save();
+        $book->save();
+        if (count($request->authors)) {
+            $book->authors()->attach($request->authors);
+        }
 		return redirect()->route('admin.index')->with('status', [
             'message' => 'Книга успешно добавлена',
             'class' => 'alert-success'
@@ -48,9 +52,10 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
-    {
-        //
+    public function show(Book $book) {
+        return view('admin.book.show', [
+            'book' => $book
+        ]);
     }
 
     /**
@@ -60,7 +65,10 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Book $book) {
-        return view('admin.book.edit', ['book' => $book]);
+        return view('admin.book.edit', [
+            'authors' => Author::all(),
+            'book' => $book
+        ]);
     }
 
     /**
@@ -72,6 +80,7 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book) {
         $book->name = $request->input('name');
+        $book->authors()->sync($request->authors);
 		$book->save();
 		return redirect()->route('admin.index')->with('status', [
             'message' => 'Данные книги успешно обновлены',
@@ -86,6 +95,7 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Book $book) {
+        $book->authors()->detach();
         $book->delete();
         return redirect()->route('admin.index')->with('status', [
             'message' => "Книга &laquo;{$book->name}&raquo; удалена",
