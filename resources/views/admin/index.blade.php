@@ -40,7 +40,7 @@
                                                 <td>{{ $author->books->count() }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <button href="{{ route('authors.edit', $author) }}" class="btn btn-primary">Ред.</button>
+                                                        <a href="{{ route('authors.edit', $author) }}" class="btn btn-primary">Ред.</a>
                                                         <form action="{{ route('authors.destroy', $author) }}" method="POST">
                                                             {{ csrf_field() }}
                                                             @method('DELETE')
@@ -82,7 +82,7 @@
                                                 <td>
                                                     @if($book->authors->count())
                                                         <ul>
-                                                        @foreach ($authors as $author)
+                                                        @foreach ($book->authors as $author)
                                                             <li>{{ $author->name }}</li>
                                                         @endforeach
                                                         </ul>
@@ -92,7 +92,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <button href="{{ route('books.edit', $book) }}" class="btn btn-primary">Ред.</button>
+                                                        <a href="{{ route('books.edit', $book) }}" class="btn btn-primary">Ред.</a>
                                                         <form action="{{ route('books.destroy', $book) }}" method="POST">
                                                             {{ csrf_field() }}
                                                             @method('DELETE')
